@@ -1,5 +1,6 @@
 using namespace std;
 #include "../include/CamadaFisica.hpp"
+#include "../include/CamadaEnlace.hpp"
 // // Declaração da variavel onde será atribuido a opção de codificação
 char op;
 
@@ -43,8 +44,12 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 		for(int i: quadro)
         printw("%d", i);
 		printw("\n");
-		CamadaFisicaTransmissora(quadro);
-
+		//trabalho 1
+		//CamadaFisicaTransmissora(quadro);
+		
+		//trabalho 2
+		CamadaEnlaceDadosTransmissora(quadro);
+		
 		refresh();
 }
 
