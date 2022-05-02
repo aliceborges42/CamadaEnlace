@@ -8,7 +8,7 @@
 #include <bits/stdc++.h>
 #include <bitset>
 #include <ncurses.h>
-
+#include <time.h> 
 using namespace std;
 void AplicacaoTransmissora();
 void CamadaDeAplicacaoTransmissora(string mensagem);

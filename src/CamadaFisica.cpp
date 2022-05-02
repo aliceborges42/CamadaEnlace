@@ -38,7 +38,7 @@ void CamadaDeAplicacaoTransmissora(string mensagem){
 
 		// codigo relacionado a interface grafica
 		attron(COLOR_PAIR(2));
-		printw("Camada De Aplicacao Transmissora\n");
+		printw("\nCamada De Aplicacao Transmissora\n");
 		attroff(COLOR_PAIR(2));
 
 		for(int i: quadro)
@@ -60,6 +60,9 @@ void AplicacaoTransmissora(){
 
 // // Inicia a tela e as cores utilizadas
 	initscr();
+	keypad(stdscr, TRUE);
+	idlok(stdscr, TRUE);
+	scrollok(stdscr, TRUE);
 	start_color();
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 	init_pair(2, COLOR_BLUE, COLOR_BLACK);
@@ -68,10 +71,10 @@ void AplicacaoTransmissora(){
 	init_pair(5, COLOR_YELLOW, COLOR_BLACK);
 
 	attron(COLOR_PAIR(2));
-	printw("Aplicação Transmissora\n");
+	printw("\nAplicação Transmissora\n");
 	attroff(COLOR_PAIR(2));
 
-	printw("Digite uma mensagem: ");
+	printw("\nDigite uma mensagem: ");
 
 	getstr(a);
 	
@@ -243,11 +246,22 @@ void MeioDeComunicacao(vector <int> fluxoBrutodeBits){
     int i;
     fluxoBrutoDeBitsPontoA = fluxoBrutodeBits;
 
-  
-    for(i = 0; i < fluxoBrutoDeBitsPontoA.size(); i++){
-        fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]); //BITS sendo transferidos
-    }
+	int porcentagemDeErros = 50; // 10%, 20%, 30%, ... , 100%
+	int size = fluxoBrutodeBits.size();
+	srand(time(NULL)); 
+    for(i = 0; i < size; i++){
+		if((rand()%100) >= (porcentagemDeErros/size))
+        	fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]); //BITS sendo transferidos
+		else{
+			if(fluxoBrutoDeBitsPontoA[i] == 0)
+				fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]+1);
+			else
+				fluxoBrutoDeBitsPontoB.push_back(fluxoBrutoDeBitsPontoA[i]-1);
+		}
 
+	}
+	printw("\n\n Transmissão da Informação\n\n");
+	printw("Chance de erro: %d%\n\n", porcentagemDeErros);
     CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }
 
@@ -335,11 +349,11 @@ void CamadaFisicaReceptora(vector<int> quadro){
 		attron(COLOR_PAIR(5));
 		printw("\n\nCamada Fisica Receptora \n");
 		attroff(COLOR_PAIR(5));
-		printw("Sua mensagem foi recebida\n\n");
+		printw("\nSua mensagem foi recebida\n\n");
 
 		refresh();
 
-		CamadaDeAplicacaoReceptora(fluxoBrutoDeBits);
+		CamadaEnlaceDadosReceptora(fluxoBrutoDeBits);
 }
 
 string DecodeToString(vector<int> quadro)
@@ -373,7 +387,7 @@ string DecodeToString(vector<int> quadro)
 void CamadaDeAplicacaoReceptora(vector<int> quadro){
 
 	attron(COLOR_PAIR(5));
-	printw("Camada de Aplicação Receptora\n");
+	printw("\nCamada de Aplicação Receptora\n");
 	attroff(COLOR_PAIR(5));
 
 	AplicacaoReceptora(DecodeToString(quadro));
@@ -382,7 +396,7 @@ void CamadaDeAplicacaoReceptora(vector<int> quadro){
 void AplicacaoReceptora(string mensagem){
 
 	attron(COLOR_PAIR(1));
-	printw("A mensagem recebida foi: ");
+	printw("\n\nA mensagem recebida foi: ");
 	attroff(COLOR_PAIR(1));
 
 	for (int k : mensagem)
