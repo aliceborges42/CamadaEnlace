@@ -18,3 +18,5 @@ Trabalho 2 de TR1 - Simulador da Camada de Enlace
 - Durante o desenvolvimento foi utilizado o seguinte tutorial para instalação do Ncurses
 	
  	https://ostechnix.com/how-to-install-ncurses-library-in-linux/
+
+	 ________
